@@ -1,0 +1,17 @@
+<template>
+  <view class="index"> 
+    hello ,this is product delivery
+  </view>
+</template>
+<script lang="ts">
+  import { ref, defineComponent } from 'vue'
+  export default defineComponent({
+    components: {},
+    setup() {
+      const msg = ref('Hello world')
+      return {
+        msg
+      }
+    }
+  })
+</script>

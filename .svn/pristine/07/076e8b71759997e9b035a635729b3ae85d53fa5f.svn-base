@@ -1,0 +1,71 @@
+<template>
+  <span @dblclick="changeEditState" v-show="!isEdit">{{
+    defaultValue
+  }}</span>
+  <span v-show="isEdit" class="flex flex-nowrap">
+    <input :value="defaultValue" @input="hangdleValue($event)" />
+    <el-button
+      @click.stop="changeEditState"
+      class="ml-10"
+      size="mini"
+      type="warning"
+      icon="el-icon-close"
+      round
+    ></el-button>
+    <el-button
+      @click.stop="confirmEdit"
+      class="ml-10"
+      size="mini"
+      type="primary"
+      icon="el-icon-check"
+      round
+    ></el-button>
+  </span>
+</template>
+<script lang="ts">
+  interface Props {
+    defaultValue: any,
+    tagName:String,
+    obj:Object
+  }
+import {  EventEmitter } from "../interface/event";
+  import { ref,defineComponent, Ref } from 'vue'
+
+  export default defineComponent({
+    props: {
+      defaultValue: {
+        type: String
+      },
+      obj:{
+        type:Object
+      },
+      tagName:{
+        type:String
+      }
+    },
+    setup(props: Props, ctx) {
+      let val: string = ''
+      let isEdit: Ref<boolean> = ref(false)
+      const changeEditState = () => {
+        isEdit.value = !isEdit.value
+      }
+
+      const confirmEdit = () => {
+        props.defaultValue = val;
+        ctx.emit("update:defaultValue",val,props.tagName,props.obj);
+        changeEditState()
+      }
+
+      const hangdleValue = (e:EventEmitter) => {
+        val = e.target.value
+      }
+
+      return {
+        changeEditState,
+        confirmEdit,
+        hangdleValue,
+        isEdit
+      }
+    }
+  })
+</script>

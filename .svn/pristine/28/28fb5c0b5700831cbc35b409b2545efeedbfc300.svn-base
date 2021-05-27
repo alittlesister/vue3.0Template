@@ -1,0 +1,8 @@
+<template>
+  <div class="about w-full h-full bg-white p-24">
+    <el-button icon="el-icon-plus" type="primary">主要按钮</el-button>
+  </div>
+</template>
+<style scoped>
+
+</style>

@@ -1,0 +1,8 @@
+import dayjs from "dayjs";
+import 'dayjs/locale/zh-cn';
+import dayjsPluginUTC from 'dayjs-plugin-utc';
+
+dayjs.locale('zh-cn');
+dayjs.extend(dayjsPluginUTC, { parseToLocal: true });
+
+export default dayjs

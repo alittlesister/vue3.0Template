@@ -1,0 +1,9 @@
+// 公共样式和变量
+$themeColor: #043E5D;
+$bgColor:#F2F6FC;
+$sideCheckedBgColor:#ECF5FF;
+$sideCheckedColor:#409EFF;
+$sideHoverBgColor:#F2F6FC;
+$sideHoverColor:#909399;
+$sideIconColor:#C0C4CC;
+$headerHeight:64px;

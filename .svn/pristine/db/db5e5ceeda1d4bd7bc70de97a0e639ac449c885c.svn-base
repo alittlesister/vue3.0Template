@@ -1,0 +1,63 @@
+<template>
+    <div
+      class="
+        o-header
+        w-full
+        h-full
+        text-white
+        pl-20
+        pr-20
+        bg-blue-500
+        flex flex-nowrap flex-row
+        justify-between
+        items-center
+      "
+    >
+      <div>
+        <i
+          class="mr-20 text-xl"
+          @click="collapseToggle"
+          :class="isCollapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'"
+        ></i>
+        <span class="text-xxl">后台管理系统</span>
+      </div>
+      <div class="flex flex-nowrap flex-row justify-between items-center">
+        <div class="mr-10">
+          <el-image
+            class="w-38 h-38 rounded-full"
+            :src="list[0]"
+            :preview-src-list="list"
+            fit="fit"
+          ></el-image>
+        </div>
+
+        <div class="pr-16 mr-16"> Username </div>
+        <div>退出登录</div>
+      </div>
+    </div>
+</template>
+<script lang="ts">
+  import { ref,defineComponent,getCurrentInstance } from "vue";
+  import "../assets/body-bg.jpg";
+
+
+export default defineComponent({
+    name: 'OHeader',
+    setup() {
+      let {ctx} = getCurrentInstance();
+        let isCollapse = ref(ctx.$store.state.collapse);
+        let list = ref(['https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg']);
+
+        function collapseToggle(){
+          ctx.$store.commit("handleCollapse",!isCollapse.value);
+          isCollapse.value = ctx.$store.state.collapse;
+        }
+        return {
+            isCollapse,
+            list,
+            collapseToggle
+        }
+    }
+})
+</script>
+

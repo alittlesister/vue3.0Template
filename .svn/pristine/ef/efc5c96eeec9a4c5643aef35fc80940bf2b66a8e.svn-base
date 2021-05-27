@@ -1,0 +1,29 @@
+const route = [
+  {
+    path: '/Home',
+    icon: 'el-icon-s-home',
+    name: 'Home',
+    title: '首页',
+    children: [
+      {
+        path: '/Home',
+        icon: 'el-icon-s-home',
+        name: 'Home',
+        title: '首页',
+      },
+      {
+        path: '/About',
+        icon: 'el-icon-s-custom',
+        name: 'About',
+        title: '关于我们',
+      }
+    ]
+  },
+  // {
+  //   path: '/About',
+  //   icon:'el-icon-s-custom',
+  //   name: 'About',
+  // },
+]
+
+export default route;

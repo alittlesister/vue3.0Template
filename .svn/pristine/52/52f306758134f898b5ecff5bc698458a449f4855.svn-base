@@ -1,0 +1,74 @@
+<template>
+  <div class="index w-full h-full">
+    <o-header />
+    <div class="flex flex-nowrap flex-row justify-between">
+      <sidebar />
+      <div class="flex-1 h-full bg-gray-200">
+        <div class="route-page h-40 w-full bg-white flex flex-nowrap flex-row justify-start items-center">
+          <el-button class="ml-10" size="mini" round type="primary">超小按钮</el-button>
+          <!-- <el-button v-for="(item,index) in match" :key="index" type="primary">
+            <span></span>
+          </el-button> -->
+        </div>
+        <div>
+          <router-view />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+  import { defineComponent } from "vue";
+  import OHeader from "../components/OHeader.vue";
+  import Sidebar from '../components/Sidebar.vue'
+  import route from '../router/route'
+  import '../assets/body-bg.jpg'
+
+  export default {
+    name: 'Index',
+    components: {
+      Sidebar,
+      OHeader
+    },
+    data() {
+      return {
+        // list: ['https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'],
+        isCollapse: false,
+        route: route
+      }
+    },
+    methods:{
+       handleOpen(key: string, keyPath: string) {
+        // console.log(key, keyPath)
+        // console.log(this.$route);
+        
+      },
+       handleClose(key: string, keyPath: string) {
+        console.log(key, keyPath)
+      },
+       
+    }
+
+  }
+
+  // import OHeader from "../components/OHeader.vue";
+  //   import {ElScrollbar} from "element-plus";
+</script>
+<style lang="scss" scoped>
+  @import '../style/common.scss';
+  .index {
+    .el-scrollbar {
+      transition: width 0.6s;
+    }
+    > div:first-child {
+      height: 60px;
+    }
+    > div:last-child {
+      height: calc(100% - 60px);
+    }
+    .route-page{
+      
+    }
+  }
+</style>

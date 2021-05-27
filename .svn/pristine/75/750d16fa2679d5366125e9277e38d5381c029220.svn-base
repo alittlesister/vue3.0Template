@@ -1,0 +1,356 @@
+<template>
+  <div class="add-quotation w-full h-full">
+    <div class="w-full flex justify-between items-center">
+      <div>
+        <div class="text-checked text-ls">新建销售报价</div>
+        <div class="text-standard text-xs"> 创建时间：2021-05-08 17:40：12</div>
+      </div>
+      <div>
+        <el-button>取消</el-button>
+        <el-button type="primary">保存</el-button>
+      </div>
+    </div>
+    <!-- <div class="w-full bg-white" style="height: calc(100% - 65px)">
+
+    </div> -->
+
+    <el-scrollbar class="w-full mt-20 bg-white" style="height: calc(100% - 65px)">
+      <div
+        class="w-full flex flex-row flex-nowrap justify-between"
+        style="height: calc(100% - 65px)"
+      >
+        <div style="width: calc(100% - 200px)" class="flex-shrink flex-grow pl-100 pr-100">
+          <TitleInput class="flex-grow flex-shrink" :title="activities[0].content">
+            <template #content>
+              <el-form :inline="true" ref="form" :model="form">
+                <el-form-item label="报价主题">
+                  <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="关联项目">
+                  <el-input v-model="form.project"></el-input>
+                </el-form-item>
+                <el-form-item label="客户名称">
+                  <el-input v-model="form.customName"></el-input>
+                </el-form-item>
+                <el-form-item label="项目负责人">
+                  <el-input v-model="form.customName"></el-input>
+                </el-form-item>
+                <el-form-item label="报价人">
+                  <el-input v-model="form.customName"></el-input>
+                </el-form-item>
+                <el-form-item label="客户联系人">
+                  <el-input v-model="form.customName"></el-input>
+                </el-form-item>
+                <el-form-item label="客户联系电话">
+                  <el-input v-model="form.customName"></el-input>
+                </el-form-item>
+                <el-form-item label="报价次数">
+                  <el-input v-model="form.customName"></el-input>
+                </el-form-item>
+              </el-form>
+            </template>
+          </TitleInput>
+          <TitleInput class="flex-grow flex-shrink" :title="activities[1].content">
+            <template #content>
+              <el-table class="w-full" :data="tableData" border>
+                <el-table-column label="操作">
+                  <template #default="props">
+                    <i v-if="props.row.id" class="el-icon-delete text-red"></i>
+                  </template>
+                </el-table-column>
+                <el-table-column label="序号" prop="id"></el-table-column>
+                <el-table-column label="产品名称">
+                  <template #default="props">
+                    <div class="flex flex-row flex-nowrap">
+                      <span>{{ props.row.name }}</span>
+                      <!-- <img class="ml-10" :src="require('../../assets/icon-shaixuan.svg')" alt="" srcset=""> -->
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="数量">
+                  <template #default="props">
+                    <TableInput
+                      :defaultValue="props.row.num"
+                      tagName="num"
+                      :obj="props"
+                      @update:defaultValue="changeValue"
+                    />
+                  </template>
+                </el-table-column>
+                <el-table-column label="销售价(￥)" prop="salesPrice"></el-table-column>
+                <el-table-column label="进货价(￥)" prop="purchasePrice"></el-table-column>
+                <el-table-column label="税(￥)" prop="tax"></el-table-column>
+                <el-table-column label="小计(￥)" prop="subtotal"></el-table-column>
+
+
+
+                <!-- <el-table-column type="expand">
+                  <template #default="props">
+                    <el-form label-position="left" inline class="demo-table-expand">
+                      <el-form-item label="商品名称">
+                        <span>{{ props.row.name }}</span>
+                      </el-form-item>
+                      <el-form-item label="所属店铺">
+                        <span>{{ props.row.shop }}</span>
+                      </el-form-item>
+                      <el-form-item label="商品 ID">
+                        <span>{{ props.row.id }}</span>
+                      </el-form-item>
+                      <el-form-item label="店铺 ID">
+                        <span>{{ props.row.shopId }}</span>
+                      </el-form-item>
+                      <el-form-item label="商品分类">
+                        <span>{{ props.row.category }}</span>
+                      </el-form-item>
+                      <el-form-item label="店铺地址">
+                        <span>{{ props.row.address }}</span>
+                      </el-form-item>
+                      <el-form-item label="商品描述">
+                        <span>{{ props.row.desc }}</span>
+                      </el-form-item>
+                    </el-form>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品ID">
+                  <template #default="props">
+                    <TableInput
+                      :defaultValue="props.row.id"
+                      tagName="id"
+                      :obj="props"
+                      @update:defaultValue="changeValue"
+                    />
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品名称" prop="name">
+                  <template #default="props">
+                    <TableInput
+                      :defaultValue="props.row.name"
+                      tagName="name"
+                      :obj="props"
+                      @update:defaultValue="changeValue"
+                    />
+                  </template>
+                </el-table-column>
+                <el-table-column label="描述" prop="desc"> </el-table-column> -->
+              </el-table>
+              <div class="text-right subtotal text-standard">（税收：¥0.00） 共2件商品   总计：<span class="text-xl text-red">{{total}}</span></div>
+              <div class="flex flex-row flex-nowrap justify-between items-center mt-16 text-standard text-sm">
+                <div>条款及条件：</div>
+                <div class="flex-grow">
+                  <el-form ref="form" :model="tableForm" label-width="80px">
+                    <el-input type="textarea" v-model="tableForm.desc"></el-input>
+                  </el-form>
+                </div>
+              </div>
+            </template>
+            <template #action>
+              <el-button type="primary" icon="el-icon-plus">添加一行</el-button>
+            </template>
+          </TitleInput>
+          <TitleInput class="flex-grow flex-shrink" :title="activities[1].content">
+            <template #content>
+              <el-table class="w-full" :data="tableData" border>
+                <el-table-column label="操作">
+                  <template #default="props">
+                    <i v-if="props.row.id" class="el-icon-delete text-red"></i>
+                  </template>
+                </el-table-column>
+                <el-table-column label="序号" prop="id"></el-table-column>
+                <el-table-column label="产品名称">
+                  <template #default="props">
+                    <div class="flex flex-row flex-nowrap">
+                      <span>{{ props.row.name }}</span>
+                      <!-- <img class="ml-10" :src="require('../../assets/icon-shaixuan.svg')" alt="" srcset=""> -->
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="数量">
+                  <template #default="props">
+                    <TableInput
+                      :defaultValue="props.row.num"
+                      tagName="num"
+                      :obj="props"
+                      @update:defaultValue="changeValue"
+                    />
+                  </template>
+                </el-table-column>
+                <el-table-column label="销售价(￥)" prop="salesPrice"></el-table-column>
+                <el-table-column label="进货价(￥)" prop="purchasePrice"></el-table-column>
+                <el-table-column label="税(￥)" prop="tax"></el-table-column>
+                <el-table-column label="小计(￥)" prop="subtotal"></el-table-column>
+              </el-table>
+              <div class="text-right subtotal text-standard">（税收：¥0.00） 共2件商品   总计：<span class="text-xl text-red">{{total}}</span></div>
+              <div class="flex flex-row flex-nowrap justify-between items-center mt-16 text-standard text-sm">
+                <div>条款及条件：</div>
+                <div class="flex-grow">
+                  <el-form ref="form" :model="tableForm" label-width="80px">
+                    <el-input type="textarea" v-model="tableForm.desc"></el-input>
+                  </el-form>
+                </div>
+              </div>
+            </template>
+            <template #action>
+              <el-button type="primary" icon="el-icon-plus">添加一行</el-button>
+            </template>
+          </TitleInput>
+        </div>
+        <div class="w-200 pt-32">
+          <el-timeline>
+            <el-timeline-item
+              v-for="(activity, index) in activities"
+              :key="index"
+              size="normal"
+              :type="activity.type"
+              :timestamp="activity.timestamp"
+            >
+              {{ activity.content }}
+            </el-timeline-item>
+          </el-timeline>
+        </div>
+      </div>
+    </el-scrollbar>
+  </div>
+</template>
+<script lang="ts">
+  import { defineComponent, ref, Ref,computed } from 'vue'
+  import TableInput from '../../components/TableInput.vue'
+  import TitleInput from '../../components/TitleStyle.vue'
+  // import shaixuan from "../../assets/icon-shaixuan.svg";
+  export default defineComponent({
+    components: {
+      TitleInput,
+      TableInput
+    },
+    setup() {
+      let num:Ref = ref(0);
+      let activities: Ref = ref([
+        {
+          content: '报价基本信息',
+          timestamp: '2018-04-15',
+          type: 'primary',
+          
+          
+        },
+        {
+          content: '报价产品明细',
+          timestamp: '2018-04-13',
+          type: 'primary',
+        },
+        {
+          content: '报价相关文件',
+          timestamp: '2018-04-11',
+        },
+        {
+          content: '动态信息',
+          timestamp: '2018-04-11',
+        }
+      ])
+
+      let form = {
+        name: '',
+        project: '',
+        customName: '',
+        
+      }
+      let tableData = [
+        {
+          id: 1,
+          name: 'dsargtws',
+          num: 12,
+          salesPrice:"198.00",
+          purchasePrice:"198.00",
+          tax:'0%',
+          subtotal:"198.00",
+        },
+        {
+          id: 1,
+          name: 'dsargtws',
+          num: 12,
+          salesPrice:"198.00",
+          purchasePrice:"198.00",
+          tax:'0%',
+          subtotal:"198.00",
+        },
+        {
+          id: 1,
+          name: 'dsargtws',
+          num: 12,
+          salesPrice:"198.00",
+          purchasePrice:"198.00",
+          tax:'0%',
+          subtotal:198.00,
+        },
+        {
+          id: 1,
+          name: 'dsargtws',
+          num: 12,
+          salesPrice:198.00,
+          purchasePrice:198.00,
+          tax:'0%',
+          subtotal:198.00,
+        },
+        // {
+        //   totalTitle:'（税收：¥0.00） 共2件商品   总计：',
+        //   total:"396.00"
+        // }
+      ]
+      let tableForm = {
+        desc:'适量是要满足店铺商品的需求量。进货数量既不能太多，造成仓储杂乱无章，或使商品展示拥塞不堪，又不能太少，太少则对顾客缺乏足够的吸引力。'
+      };
+
+      let total = computed(()=>{
+        let number = 0;
+        tableData.forEach((el:any,index:number)=>{
+          number+=Number(el.subtotal);
+        })
+        num.value = number+'.00';
+        return num.value
+      })
+
+      const changeValue = (val: any, name: any, obj: any) => {
+        obj.row[name] = val
+        console.log(tableData)
+      }
+      const addType = (index: number) => {
+        activities.value[index].type === 'primary'
+          ? (activities.value[index].type = '')
+          : (activities.value[index].type = 'primary')
+        for (let a = index; index < activities.value; a++) {
+          activities.value[a].type = ''
+        }
+      }
+
+
+      return {
+        activities,
+        form,
+        tableForm,
+        tableData,
+        changeValue,
+        addType,
+        total
+      }
+    }
+  })
+</script>
+
+<style lang="scss" scoped>
+  .add-quotation {
+    .el-form-item__label {
+      width: 120px;
+    }
+    .subtotal{
+      border-bottom:1px solid #EBEEF5;
+      border-left:1px solid #EBEEF5;
+      border-right:1px solid #EBEEF5;
+      padding: 12px 54px 12px 0;
+    }
+  }
+</style>
+<style lang="scss">
+  .add-quotation {
+    .el-form-item__label {
+      width: 120px;
+    }
+  }
+</style>

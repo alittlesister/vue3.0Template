@@ -1,0 +1,101 @@
+<template>
+  <div class="add-quotation w-full">
+    <div class="flex justify-between items-center">
+      <div>
+        <div class="text-checked text-ls">新建销售报价</div>
+        <div class="text-standard text-xs"> 创建时间：2021-05-08 17:40：12 </div>
+      </div>
+      <div>
+        <el-button>取消</el-button>
+        <el-button type="primary">保存</el-button>
+      </div>
+    </div>
+    <div class="w-full mt-20 bg-white flex flex-row flex-nowrap jusfity-between pt-32 pl-100">
+      <div class="flex-grow">
+        <title-input title="报价基本信息">
+          <template #action>
+            <el-button type="primary">主要按钮</el-button>
+          </template>
+          <template #content>
+
+            <el-form :inline="true" ref="form" :model="form">
+              <el-form-item label="报价主题">
+                <el-input v-model="form.name"></el-input>
+              </el-form-item>
+              <el-form-item class="ml-40" label="关联项目">
+                <el-input v-model="form.project"></el-input>
+              </el-form-item>
+
+
+
+
+
+
+
+
+
+
+
+            </el-form>
+
+          </template>
+        </title-input>
+      </div>
+      <div class="w-200">
+        <el-timeline>
+          <el-timeline-item
+            v-for="(activity, index) in activities"
+            :key="index"
+            size="normal"
+            :type="activity.type"
+            :timestamp="activity.timestamp"
+          >
+            {{ activity.content }}
+          </el-timeline-item>
+        </el-timeline>
+      </div>
+    </div>
+  </div>
+</template>
+<script lang="ts">
+  import { defineComponent } from 'vue'
+  import TitleInput from '../../components/TitleStyle.vue'
+  export default defineComponent({
+    components: {
+      TitleInput
+    },
+    setup() {
+      let activities = [
+        {
+          content: '活动按期开始',
+          timestamp: '2018-04-15',
+          type: 'primary'
+        },
+        {
+          content: '通过审核',
+          timestamp: '2018-04-13',
+          type: 'primary'
+        },
+        {
+          content: '创建成功',
+          timestamp: '2018-04-11'
+        }
+      ]
+
+      let form = {
+        name:'',
+        project:''
+      }
+
+      return {
+        activities,
+        form
+      }
+    }
+  })
+</script>
+
+<style lang="scss" scoped>
+  .add-quotation {
+  }
+</style>

@@ -1,0 +1,119 @@
+<template>
+  <div class="index w-full h-full">
+    <o-header />
+    <div class="flex flex-nowrap flex-row justify-between">
+      <sidebar />
+      <div
+        :style="{ width: collapse ? 'calc(100% - 60px)' : 'calc(100% - 264px)' }"
+        class="h-full bg-gray-200 container-wrap"
+      >
+        <el-scrollbar class="horizontal-scrollbar border-gray-100 border-b-2 border-solid h-40 w-full bg-white">
+          <el-button
+            @click.stop="toggleTagsPage(item)"
+            v-for="(item, index) in tagList"
+            :key="index"
+            class="ml-10"
+            size="mini"
+            round
+            :type="$router.currentRoute.value.fullPath.includes(item.path) ? 'primary' : 'info'"
+          >
+            <span>{{ item.title }}</span>
+            <i
+              v-show="!item.path.includes('Home')"
+              @click.stop="togglePage(index)"
+              class="el-icon-close ml-10"
+            ></i>
+          </el-button>
+        </el-scrollbar>
+        <div class="w-full" style="height: calc(100% - 40px)">
+          <el-scrollbar>
+            <router-view />
+          </el-scrollbar>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+  import { defineComponent, getCurrentInstance, computed } from 'vue'
+  import OHeader from '../components/OHeader.vue'
+  import Sidebar from '../components/Sidebar.vue'
+
+  export default defineComponent({
+    name: 'Index',
+    components: {
+      Sidebar,
+      OHeader
+    },
+    computed: {
+      tagList() {
+        let instance: any = getCurrentInstance()
+        return instance.proxy.$store.state.tagsList
+      }
+    },
+    setup() {
+      let instance: any = getCurrentInstance()
+      let proxy = instance.proxy
+      let list = proxy.$store.state.tagsList
+      let collapse = computed(() => {
+        return proxy.$store.state.collapse
+      })
+
+      function toggleTagsPage(item: any) {
+        proxy.$router.replace({ path: item.path })
+        proxy.$store.commit('setDefaultMenu', item.path)
+      }
+      function togglePage(index: number) {
+        if (!(list.length <= 1)) {
+          proxy.$router.replace({ path: list[index - 1].path })
+          proxy.$store.commit('delTagsItem', index)
+          proxy.$store.commit('setDefaultMenu', list[index - 1].path)
+        } else {
+          proxy.$router.replace({ path: '/Home' })
+          proxy.$store.commit('setDefaultMenu', '/Home')
+        }
+      }
+
+      return {
+        togglePage,
+        toggleTagsPage,
+        collapse
+      }
+    }
+  })
+
+  // import OHeader from "../components/OHeader.vue";
+  //   import {ElScrollbar} from "element-plus";
+</script>
+<style lang="scss" scoped>
+  @import '../style/common.scss';
+  .index {
+    .el-scrollbar {
+      transition: width 0.6s;
+      .el-scrollbar__wrap {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+      }
+    }
+    > div:first-child {
+      height: 60px;
+    }
+    > div:last-child {
+      width: auto;
+      height: calc(100% - 60px);
+    }
+    .container-wrap {
+      transition: width 0.6s;
+    }
+  }
+</style>
+<style>
+  .horizontal-scrollbar .el-scrollbar__view {
+    height: 100% !important;
+    display: flex !important;
+    flex-flow: row nowrap;
+    align-items: center !important;
+  }
+</style>

@@ -1,0 +1,103 @@
+<template>
+  <el-scrollbar class="h-full" :class="isCollapse ? 'w-65' : 'w-264'">
+    <div class="sidebar">
+      <el-menu
+        v-if="routeObj"
+        :collapse="isCollapse"
+        :collapse-transition="false"
+        class="h-full"
+        unique-opened
+        @open="handleOpen"
+        :default-active="defaultMenu"
+        @close="handleClose"
+        :router="true"
+      >
+        <template v-for="(item, index) in routeObj" :key="index">
+          <el-submenu v-if="item.children" :index="item.path">
+            <template #title>
+              <i v-show="item.icon" :class="item.icon"></i>
+              <span>{{ item.title }}</span>
+            </template>
+            <el-menu-item
+              @click="recordPage(child)"
+              v-for="(child, i) in item.children"
+              :key="i"
+              :index="child.path"
+            >
+              <i v-show="child.icon" :class="child.icon"></i>
+              <template #title>{{ child.title }}</template>
+            </el-menu-item>
+          </el-submenu>
+
+          <el-menu-item @click="recordPage(child)" v-else :index="item.path" :route="item.path">
+            <i v-show="item.icon" :class="item.icon"></i>
+            <template #title>{{ item.title }}</template>
+          </el-menu-item>
+        </template>
+      </el-menu>
+    </div>
+  </el-scrollbar>
+</template>
+<script lang="ts">
+  import route from '../router/route'
+  import { ref, defineComponent, getCurrentInstance, computed } from 'vue'
+  export default defineComponent({
+    name: 'Slidebar',
+    computed: {
+      isCollapse() {
+        let instance: any = getCurrentInstance()
+        return instance.proxy.$store.state.collapse
+      },
+      defaultMenu(){
+        let instance: any = getCurrentInstance()
+        return instance.proxy.$store.state.defaultMenu
+      }
+    },
+    setup() {
+      let { proxy }: any = getCurrentInstance();
+      let list = ref(['https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'])
+      let routeObj = ref(route)
+      proxy.$store.commit("setDefaultMenu",proxy.$route.fullPath);
+
+      const recordPage = (item: any)=> {
+        let list: Array<object> = proxy.$store.state.tagsList
+        let isInclude: boolean = false
+        list.forEach((ele: any) => {
+          if (ele.path.includes(item.path)) isInclude = true
+        })
+        if(!isInclude) proxy.$store.commit('setTagItem', item)
+        proxy.$store.commit("setDefaultMenu",item.path);
+      }
+
+
+      const handleOpen = (key: string, keyPath: string) => {
+        // console.log(key, keyPath)
+      }
+      const handleClose = (key: string, keyPath: string) => {
+        // console.log(key, keyPath)
+      }
+
+      return {
+        handleOpen,
+        handleClose,
+        list,
+        routeObj,
+        recordPage
+      }
+    }
+  })
+</script>
+<style lang="scss" scoped>
+  .sidebar {
+    .el-menu {
+      border: 0;
+    }
+  }
+</style>
+<style lang="scss">
+  .sidebar {
+    .el-menu {
+      border: 0;
+    }
+  }
+</style>

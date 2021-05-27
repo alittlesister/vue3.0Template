@@ -1,0 +1,71 @@
+<template>
+  <div class="table-input">
+    <el-input
+      :disabled="isEditInput ? isEditInput : false"
+      class="w-full table-input mr-10"
+      v-model="defaultValue"
+      placeholder="请输入数据"
+      @focus="hangdleValue($event)"
+      @blur="confirmEdit"
+      @input="hangdleValue($event)"
+    ></el-input>
+  </div>
+</template>
+<script lang="ts">
+  interface Props {
+    defaultValue: any
+    tagName: String
+    obj: Object
+  }
+  import { EventEmitter } from '../interface/event'
+  import { ref, defineComponent, Ref } from 'vue'
+
+  export default defineComponent({
+    props: {
+      defaultValue: {
+        type: String || Number
+      },
+      isEditInput: {
+        type: Boolean
+      },
+      obj: {
+        type: Object
+      },
+      tagName: {
+        type: String
+      }
+    },
+    setup(props: Props, ctx) {
+      let val: string = ''
+      let isEdit: Ref<boolean> = ref(false)
+      const changeEditState = () => {
+        isEdit.value = !isEdit.value
+      }
+
+      const confirmEdit = () => {
+        props.defaultValue = val
+        ctx.emit('update:defaultValue', val, props.tagName, props.obj)
+        changeEditState()
+      }
+
+      const hangdleValue = (e: EventEmitter) => {
+        val = e.target.value
+      }
+
+      return {
+        changeEditState,
+        confirmEdit,
+        hangdleValue,
+        isEdit
+      }
+    }
+  })
+</script>
+<style lang="scss">
+  .table-input {
+    .el-input__inner {
+      border-color: transparent;
+      min-width:40px;
+    }
+  }
+</style>

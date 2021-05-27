@@ -1,0 +1,51 @@
+{
+  "id": "2567519",
+  "name": "库存管理系统",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "21789816",
+      "name": "icon-shaixuan",
+      "font_class": "icon-shaixuan",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "13972499",
+      "name": "项目路演",
+      "font_class": "xiangmuluyan",
+      "unicode": "e689",
+      "unicode_decimal": 59017
+    },
+    {
+      "icon_id": "10299093",
+      "name": "已通过",
+      "font_class": "yitongguo",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "10299097",
+      "name": "已拒绝",
+      "font_class": "yijujue",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "10299108",
+      "name": "待审核",
+      "font_class": "daishenhe",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "12815781",
+      "name": "已撤销",
+      "font_class": "yichexiao",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    }
+  ]
+}

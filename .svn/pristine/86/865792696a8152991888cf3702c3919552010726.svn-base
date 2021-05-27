@@ -1,0 +1,134 @@
+<template>
+  <div class="index w-full h-full">
+    <o-header />
+    <div class="flex flex-nowrap flex-row justify-between">
+      <sidebar />
+      <div
+        :style="{ width: collapse ? 'calc(100% - 60px)' : 'calc(100% - 264px)' }"
+        class="h-full container-wrap"
+      >
+        <el-scrollbar class="horizontal-scrollbar h-56 w-full bg-white">
+          <div class="h-full text-sm pl-12 pr-12 flex items-center record-page" @click.stop="toggleTagsPage(item)"
+            v-for="(item, index) in tagList"
+            :key="index"
+            :class="[$router.currentRoute.value.fullPath.includes(item.path) ? 'bg-checked text-checked' : 'bg-white text-standard',item.path.includes('Home')?' justify-center w-80':' justify-between min-w-140']"
+            >
+            <span>{{ item.title }}</span>
+            <i
+              v-show="!item.path.includes('Home')"
+              @click.stop="togglePage(index)"
+              class="text-sm el-icon-close ml-10 mr-10"
+            ></i>
+          </div>
+        </el-scrollbar>
+        <div class="plat-container ml-32 mr-32 mt-16 mb-16" style="height: calc(100% - 88px);width:calc(100% - 64px)">
+          <el-scrollbar>
+            <router-view />
+          </el-scrollbar>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+  import {defineComponent, getCurrentInstance, computed } from 'vue'
+  import OHeader from '../components/OHeader.vue'
+  import Sidebar from '../components/Sidebar.vue'
+  export default defineComponent({
+    name: 'Index',
+    components: {
+      Sidebar,
+      OHeader
+    },
+    setup() {
+      let instance: any = getCurrentInstance()
+      let tagList = computed(()=>{
+        return instance.proxy.$store.state.tagsList
+      })
+      let proxy = instance.proxy
+      let list = proxy.$store.state.tagsList
+      let collapse = computed(() => {
+        return proxy.$store.state.collapse
+      })
+
+      const toggleTagsPage = (item: any) => {
+        proxy.$router.replace({ path: item.path })
+        proxy.$store.commit('setDefaultMenu', item.path)
+      }
+
+       const togglePage = (index: number) => {
+        if (!(list.length <= 1)) {
+          proxy.$router.replace({ path: list[index - 1].path })
+          proxy.$store.commit('delTagsItem', index)
+          proxy.$store.commit('setDefaultMenu', list[index - 1].path)
+        } else {
+          proxy.$router.replace({ path: '/Home' })
+          proxy.$store.commit('setDefaultMenu', '/Home')
+        }
+      }
+
+      return {
+        togglePage,
+        toggleTagsPage,
+        collapse,
+        tagList
+      }
+    }
+  })
+
+  // import OHeader from "../components/OHeader.vue";
+  //   import {ElScrollbar} from "element-plus";
+</script>
+<style lang="scss" scoped>
+  @import '../style/common.scss';
+  .index {
+    position: relative;
+    padding-top:$headerHeight;
+    background: $bgColor;
+    .el-scrollbar {
+      transition: width 0.6s;
+      .el-scrollbar__wrap {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+      }
+    }
+    > div:last-child {
+      width: auto;
+      height:100%;
+    }
+    .container-wrap {
+      transition: width 0.6s;
+    }
+    .record-page{
+      position: relative;
+      >span{
+        white-space: nowrap;
+      }
+    }
+    .record-page::before{
+      content:'';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 24px;
+      background: #F2F6FC;
+    }
+  }
+</style>
+<style>
+  .horizontal-scrollbar .el-scrollbar__view {
+    height: 100% !important;
+    display: flex !important;
+    flex-flow: row nowrap;
+    align-items: center !important;
+  }
+  .plat-container .el-scrollbar,.plat-container .el-scrollbar__wrap,.plat-container .el-scrollbar__view{
+    width: 100%;
+    height: 100%;
+  }
+ 
+</style>

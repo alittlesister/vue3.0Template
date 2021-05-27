@@ -1,0 +1,17 @@
+// 公共样式和变量
+$themeColor: #043e5d;
+$bgColor: #f2f6fc;
+$sideCheckedBgColor: #ecf5ff;
+$sideCheckedColor: #409eff;
+$sideHoverBgColor: #f2f6fc;
+$sideHoverColor: #909399;
+$sideIconColor: #c0c4cc;
+$paginationColor: #606626;
+$headerHeight: 64px;
+
+.index .el-form-item__label {
+  width: 120px;
+}
+.el-input__inner{
+  min-width: 200px;
+}

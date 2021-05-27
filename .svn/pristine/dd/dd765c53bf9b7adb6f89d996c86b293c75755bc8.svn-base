@@ -1,0 +1,32 @@
+module.exports = {
+  purge: [],
+  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    spacing: exportPxirelUnit([
+      10,16,20,30,38,40,50,60,65,200,264
+    ]),
+    minWidth: exportPxirelUnit([800]),
+    fontSize: {
+      xs: '12px',
+      sm: '14px',
+      normal: '16px',
+      ls: '18px',
+      xl: '20px',
+      xxl:'22px'
+    },
+    extend: {},
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+function exportPxirelUnit(array) {
+  let obj =  array.reduce((pre, next) => {
+    pre[next] = next+'px';
+    return pre;
+  }, {})
+  return obj
+}

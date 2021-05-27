@@ -1,0 +1,44 @@
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router/index';
+import vuex from './store/index';
+
+import {
+  ElButton,
+  ElCheckbox,
+  ElImage,
+  ElMenu,
+  ElMenuItem,
+  ElMenuItemGroup,
+  ElForm,
+  ElFormItem,
+  ElTable,
+  ElTableColumn,
+  ElSubmenu,
+  ElScrollbar
+
+} from 'element-plus';
+import 'element-plus/lib/theme-chalk/index.css';
+import './index.css';
+
+const app = createApp(App);
+
+
+
+
+app
+  .use(router)
+  .use(vuex)
+  .use(ElButton)
+  .use(ElCheckbox)
+  .use(ElImage)
+  .use(ElForm)
+  .use(ElFormItem)
+  .use(ElMenu)
+  .use(ElMenuItem)
+  .use(ElMenuItemGroup)
+  .use(ElTable)
+  .use(ElTableColumn)
+  .use(ElSubmenu)
+  .use(ElScrollbar)
+  .mount('#app');

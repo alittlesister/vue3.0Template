@@ -1,0 +1,59 @@
+import Index from '../views/Index.vue'
+const routes = [
+  {
+    path: '/Home',
+    name: 'Home',
+    meta: {
+      title: '首页'
+    },
+    component: () => import('../views/Home.vue')
+  },
+  {
+    path: '/About',
+    name: 'About',
+    component: () => import('../views/About.vue')
+  },
+  {
+    path: '/List',
+    name: 'List',
+    component: () => import('../views/List.vue')
+  },
+  {
+    path: '/Form',
+    name: 'Form',
+    component: () => import('../views/Form.vue')
+  },
+  {
+    path: '/SalesQuotation',
+    name: 'SalesQuotation',
+    meta: {
+      title: '销售报价'
+    },
+    component: () => import('../views/OrderManagement/SalesQuotation.vue')
+  },
+  {
+    path: '/AddQuotation',
+    name: 'AddQuotation',
+    meta: {
+      title: '新增销售报价'
+    },
+    component: () => import('../views/OrderManagement/AddQuotation.vue')
+  },
+  {
+    path: '/SalesOrderContract',
+    name: 'SalesOrderContract',
+    meta: {
+      title: '销售订单合同'
+    },
+    component: () => import('../views/OrderManagement/SalesOrderContract.vue')
+  },
+  {
+    path: '/SalesContractEdit',
+    name: 'SalesContractEdit',
+    meta: {
+      title: '编辑销售订单合同'
+    },
+    component: () => import('../views/OrderManagement/SalesContractEdit.vue')
+  },
+]
+export default routes

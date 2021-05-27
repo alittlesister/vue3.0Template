@@ -1,0 +1,77 @@
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router/index';
+import vuex from './store/index';
+
+import {
+  ElButton,
+  ElRadio,
+  ElRow,
+  ElCol,
+  ElInput,
+  ElCheckbox,
+  ElInputNumber,
+  ElImage,
+  ElMenu,
+  ElMenuItem,
+  ElMenuItemGroup,
+  ElForm,
+  ElFormItem,
+  ElTable,
+  ElTableColumn,
+  ElSubmenu,
+  ElScrollbar,
+  ElPagination,
+  ElBadge,
+  ElDropdown, 
+  ElDropdownMenu, 
+  ElDropdownItem, 
+  ElCollapse, 
+  ElCollapseItem, 
+  ElTimeline,
+  ElTimelineItem, 
+
+  
+
+
+} from 'element-plus';
+import 'element-plus/lib/theme-chalk/index.css';
+import './index.css';
+
+const app = createApp(App);
+
+
+
+
+app
+  .use(router)
+  .use(vuex)
+  .use(ElButton)
+  .use(ElInput)
+  .use(ElCheckbox)
+  .use(ElInputNumber)
+  .use(ElImage)
+  .use(ElForm)
+  .use(ElFormItem)
+  .use(ElMenu)
+  .use(ElMenuItem)
+  .use(ElMenuItemGroup)
+  .use(ElTable)
+  .use(ElTableColumn)
+  .use(ElSubmenu)
+  .use(ElScrollbar)
+  .use(ElPagination)
+  .use(ElRadio)
+  .use(ElBadge)
+  .use(ElRow)
+  .use(ElCol)
+  .use(ElDropdown)
+  .use(ElDropdownMenu)
+  .use(ElDropdownItem)
+  .use(ElCollapse)
+  .use(ElCollapseItem)
+  .use(ElTimeline)
+  .use(ElTimelineItem)
+
+ 
+  .mount('#app');

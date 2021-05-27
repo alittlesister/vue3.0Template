@@ -1,0 +1,33 @@
+import {createRouter, createWebHashHistory} from 'vue-router'
+import Index from '../views/Index.vue';
+
+// 在 Vue-router新版本中，需要使用createRouter来创建路由
+export default createRouter({
+  // 指定路由的模式,此处使用的是hash模式
+  history: createWebHashHistory(),
+  // 路由地址
+  routes:[
+    {
+      path: '/',
+      name: 'Index',
+      component: Index,
+      children: [
+        {
+          path: '/',
+          name: 'Home',
+          component: () => import('../views/Home.vue'),
+        },
+        {
+          path: '/Home',
+          name: 'Home',
+          component: () => import('../views/Home.vue'),
+        },
+        {
+          path: '/About',
+          name: 'About',
+          component: () => import('../views/About.vue'),
+        },
+      ],
+    },
+  ]
+})
